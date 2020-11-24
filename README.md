@@ -18,3 +18,7 @@ The script writes the file `feeds/bhaak_vilistextum_pull_requests.rss` with the 
 ruby github-feeds.rb --pulls --owner bhaak --repository vilistextum
 ```
 
+### Output directory
+
+The default output directory is the current directory.
+The output directory can be changed with the --directory option.

@@ -9,6 +9,7 @@ require 'fileutils'
 pulls = false
 owner = nil
 repository = nil
+directory = '.'
 
 OptionParser.new do |parser|
   parser.separator "List last commits of all reachable git branches"
@@ -17,6 +18,7 @@ OptionParser.new do |parser|
   parser.on('-p', '--pulls',  'List pull requests instead of issues') { pulls = true }
   parser.on('-o', '--owner=OWNER', '') {|o| owner = o }
   parser.on('-r', '--repository=REPOSITORY', '') {|r| repository = r }
+  parser.on('-d', '--directory=DIRECTORY', '') {|d| directory = d }
 end.parse!
 
 raise OptionParser::MissingArgument.new('--owner is required') if owner.nil?
@@ -56,6 +58,6 @@ json.each {|data|
 }
 feed.channel = channel
 
-FileUtils.mkdir_p owner
-File.open("feeds/#{owner}_#{repository}_#{type.gsub(' ', '_')}s.rss", "w") {|f| f.write(feed.to_s) }
+FileUtils.mkdir_p directory
+File.open("#{directory}/#{owner}_#{repository}_#{type.gsub(' ', '_')}s.rss", "w") {|f| f.write(feed.to_s) }
 
